@@ -1,14 +1,17 @@
-# Gradle
+# Java / Gradle
 .gradle/
-build/
+**/build/
+**/out/
 
-# IntelliJ
+# IntelliJ / IDEA
 .idea/
 *.iml
 
-# Node
-node_modules/
-dist/
+# Node / React
+client/node_modules/
+client/dist/
+client/.vite/
+client/.cache/
 
 # OS
 .DS_Store
