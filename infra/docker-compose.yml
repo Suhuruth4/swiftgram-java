@@ -1,0 +1,37 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: swift
+      POSTGRES_PASSWORD: swiftpass
+      POSTGRES_DB: swiftgram
+    ports: ["5432:5432"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U swift -d swiftgram"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+
+  redis:
+    image: redis:7-alpine
+    ports: ["6379:6379"]
+
+  nats:
+    image: nats:2
+    command: ["-js"]
+    ports: ["4222:4222","8222:8222"]
+
+  minio:
+    image: minio/minio
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: adminadmin
+    command: server /data --console-address ":9001"
+    ports: ["9000:9000","9001:9001"]
+    volumes: ["minio:/data"]
+
+volumes:
+  pgdata:
+  minio:
